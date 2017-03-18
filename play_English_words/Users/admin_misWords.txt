@@ -1,0 +1,2 @@
+score   n.得分，比数，成绩
+widen   vt.加宽
