@@ -3,7 +3,7 @@
 # Date:2017/3/18
 # version: 1.0
 """
-	程序类型：OOP
+	Note: 一定在终端运行，不要在python自带的console下运行
 	库：poplib、smtplib、email 前两个分别负责收发邮件，最后一个负责解析和构造邮件
 	实现的功能：登录邮箱，查看邮件总数，查看指定邮件，邮件发送\转发\删除等
 """
@@ -15,14 +15,14 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
+import getpass
 
 
 class Email:
 	def __init__(self):
-		self.email_info = ''
 		self.server = input('输入pop服务器地址：')
 		self.usr = input('请输入邮箱地址：')
-		self.psw = input('请输入邮箱pop服务密码：')
+		self.psw = getpass.getpass('请输入邮箱pop服务密码：')
 
 	def login(self):
 		self.server1 = poplib.POP3_SSL(self.server)  # ssl
@@ -51,7 +51,7 @@ class Email:
 		try:
 			with open(fname, pattern) as f:
 				f.write(data)
-			print('文件已另存为：%s' % fname)
+			print('附件已另存为：%s' % fname)
 		except Exception as err:
 			print('保存文件出现问题:', err)
 
@@ -95,7 +95,7 @@ class Email:
 							self.To = value
 					if disp == 'all':
 						print('%s%s:%s' % ('  ' * indent, header, value))
-			self.email_info += '【这是一封由 %s 向 %s 发的邮件， 主题为：%s】' % (self.From, self.To, self.subject)
+			self.email_info = '【这是一封由 %s 向 %s 发的邮件， 主题为：%s】' % (self.From, self.To, self.subject)
 		if disp == 'all':
 			# 如果是多重的格式，递归输出
 			if (msg.is_multipart()):
@@ -218,7 +218,6 @@ if __name__ == '__main__':
 				original_msg = hdlMail.get_msg(index)
 				hdlMail.parse_email(original_msg, disp='part')  # 只得到原邮件的收发人信息，对正文不做解析（转发的是原文本
 				text = hdlMail.email_info
-				print(text)
 				num = int(input('你想要发给多少人？'))
 				receivers = []
 				for i in range(0, num):
