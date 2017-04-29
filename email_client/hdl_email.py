@@ -1,7 +1,7 @@
 # encoding=utf-8
 # Author: Cloud Sophier
 # Date:2017/3/18
-# version: 1.0
+# version: 1.1
 """
 	Note: 一定在终端运行，不要在python自带的console下运行
 	库：poplib、smtplib、email 前两个分别负责收发邮件，最后一个负责解析和构造邮件
@@ -20,12 +20,16 @@ import getpass
 
 class Email:
 	def __init__(self):
-		self.server = input('输入pop服务器地址：')
+		self.email_dict={1:('gmail','pop.gmail.com',995,'smtp.gmail.com',465),2:('outlook','pop-mail.outlook.com',995,'smtp-mail.outlook.com',587),3:('163','pop.163.com',995,'smtp.163.com',994)}
+		print(self.email_dict)
+		self.email = eval(input('输入要登录的邮箱类型号：'))
+		self.server = self.email_dict[self.email][1]
+		self.port=self.email_dict[self.email][2]
 		self.usr = input('请输入邮箱地址：')
 		self.psw = getpass.getpass('请输入邮箱pop服务密码：')
 
 	def login(self):
-		self.server1 = poplib.POP3_SSL(self.server)  # ssl
+		self.server1 = poplib.POP3_SSL(self.server,self.port)  # ssl
 		self.server1.set_debuglevel(0)
 		self.server1.user(self.usr)
 		self.server1.pass_(self.psw)
@@ -150,7 +154,7 @@ class Email:
 			msg['From'] = str(self.usr)
 			msg['To'] = ';'.join(receivers)  # 多个收件人
 
-			self.server2 = smtplib.SMTP('smtp.163.com', 25)
+			self.server2 = smtplib.SMTP_SSL(self.email.dict[self.email][3], self.email_dict[self.email][4])
 			self.server2.set_debuglevel(0)
 			self.server2.login(self.usr, self.psw)
 			self.server2.sendmail(self.usr, receivers, msg.as_string())
