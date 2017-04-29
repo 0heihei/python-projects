@@ -1,11 +1,7 @@
-# encoding=utf8
-""" 
-	爬取一天世界   https://blog.yitianshijie.net/  博文的简易爬虫实现
+"""
+	爬取一天世界   https://blog.yitianshijie.net/  博文的超简易爬虫实现
+	网易163邮箱的垃圾检测很垃圾，已弃用
 	请预先建立  readLog.txt  文件
-	Requirements:
-	requests
-	lxml
-	bs4
 """
 
 import requests
@@ -13,9 +9,10 @@ from bs4 import BeautifulSoup
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-import time, sys
+import time
 
-# 使用BeautifulSoup解析HTML
+
+# 使用BeautifulSoup解析HTML，或者可以爬下HTML直接编码发送？
 def analyse(node):
 	blogTitle = node.a.string
 	blogUrl = node.a['href']
@@ -33,15 +30,15 @@ def send2email(blog):
 		msg = MIMEText(blog, 'plain', 'utf-8')  # 纯文本邮件
 		subject = '【一天世界】博文更新'
 		sender = 'cloud_sophier@163.com'
-		password = 'd19960808'
-		receiver = 'd15821917291@gmail.com'
+		password = 'wy123456'
+		receiver = 'cloud-sophier@outlook.com'
 		smtp_server = 'smtp.163.com'
 
 		msg['Subject'] = Header(subject, 'utf-8')
 		msg['From'] = 'cloud_sophier@163.com'
-		msg['To'] = 'd15821917291@gmail.com'
+		msg['To'] = 'cloud-sophier@outlook.com'
 
-		server = smtplib.SMTP_SSL(smtp_server, 99)
+		server = smtplib.SMTP_SSL(smtp_server, 465)
 		server.set_debuglevel(0)
 		server.login(sender, password)
 		server.sendmail(sender, [receiver], msg.as_string())
@@ -50,6 +47,7 @@ def send2email(blog):
 	except Exception as e:
 		print(e)
 		return 0
+
 
 def Push():
 	headers = {}
@@ -66,7 +64,7 @@ def Push():
 		for node in content:
 			if not (node['id'] + '\n') in ids:
 				blog = analyse(node)
-				if not send2email(blog) ==0:
+				if not send2email(blog) == 0:
 					f.write(node['id'] + '\n')
 					print('-------------------Successful!--------------------')
 				else:
@@ -74,35 +72,8 @@ def Push():
 			else:
 				print('------------------No new blogs!------------------')
 
-if len(sys.argv) == 1:
-	timer = 3600
-elif len(sys.argv) == 2:
-	if sys.argv[1] == "-q":
-		sys.exit()
-	if sys.argv[1] == "-t":
-		print('参数格式错误')
-		sys.exit()
-	else:
-		if sys.argv[1] == "-h":
-			print('''
-Run:	$python blogCrawler.py
-Options:
-	-q:退出
-	-h:帮助
-	-t:检查博文更新的时间间隔(默认为3600s)
-BTW:	ctrl+C 终止程序
-	请自行进入程序更改邮件相关选项
-				 ''')
-		sys.exit()
-else:
-	if sys.argv[1] == "-t":
-		try:
-			timer=eval(sys.argv[2])
-		except:
-			print('参数格式错误')
-			sys.exit()
-	else:
-		timer = 3600
+
+timer = eval(input("设置刷新间隔："))
 while True:
 	Push()
 	time.sleep(timer)
