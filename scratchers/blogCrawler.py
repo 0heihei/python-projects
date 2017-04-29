@@ -33,7 +33,7 @@ def send2email(blog):
 		msg = MIMEText(blog, 'plain', 'utf-8')  # 纯文本邮件
 		subject = '【一天世界】博文更新'
 		sender = 'cloud_sophier@163.com'
-		password = '*******'
+		password = 'd19960808'
 		receiver = 'd15821917291@gmail.com'
 		smtp_server = 'smtp.163.com'
 
@@ -41,15 +41,15 @@ def send2email(blog):
 		msg['From'] = 'cloud_sophier@163.com'
 		msg['To'] = 'd15821917291@gmail.com'
 
-		server = smtplib.SMTP(smtp_server, 25)
-		server.set_debuglevel(1)
+		server = smtplib.SMTP_SSL(smtp_server, 99)
+		server.set_debuglevel(0)
 		server.login(sender, password)
 		server.sendmail(sender, [receiver], msg.as_string())
 		server.quit()
 		return 1
-	except:
+	except Exception as e:
+		print(e)
 		return 0
-
 
 def Push():
 	headers = {}
@@ -70,7 +70,7 @@ def Push():
 					f.write(node['id'] + '\n')
 					print('-------------------Successful!--------------------')
 				else:
-					print('---------------Error: send2email()---------------')
+					print('----------------------Failed----------------------')
 			else:
 				print('------------------No new blogs!------------------')
 
