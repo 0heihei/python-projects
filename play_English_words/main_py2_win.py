@@ -50,7 +50,7 @@ class Log:
             return
         else:               #得到合法输入，若是登录则判断，若是注册则保存用户信息
             self.userInfo = self.getName + '  ' + self.getPswd + '\n'
-            with open('Users/usersInfo.dat', 'a+') as self.f:
+            with open('Users/usersInfo.dat', 'r') as self.f:
                 self.userList = self.f.readlines()
                 try:    # 下面操作字符串有时候会报错(转码错误)，故try
                     if self.v1.get() == 0:
