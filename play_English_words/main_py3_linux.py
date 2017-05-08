@@ -337,12 +337,18 @@ class MyApp:
         except:
             return  # 没网不行
         else:  # 网页保存为了字符串，查找标志词，确定单词翻译所在
-            self.data = self.page.read()
-            self.index_begin = self.data.find(b'class=\"dict-basic-ul\"')  # py3的re必须是bytes
-            self.start = self.data.find(b'</span><strong>', self.index_begin)
-            self.end = self.data.find(b'</strong></li>', self.index_begin)
-            if self.start > 0:  # 当找不到标志性序列时就会返回 -1，大于0表示找到了
-                return self.data[self.start + 15: self.end].decode('utf8')
+            pattern1 = re.compile('<ul class="dict-basic-ul">([\s\S]*?)</ul>')
+            pattern2 = re.compile('<span>(.*)</span>')
+            pattern3 = re.compile('<strong>(.*)</strong>')
+            self.data = self.page.read().decode('utf8')
+            trans_content = re.findall(pattern1, self.data)
+            trans1 = re.findall(pattern2, trans_content[0])
+            trans2 = re.findall(pattern3, trans_content[0])
+            trans_all=''
+            for i in range(min(len(trans1), len(trans2))):
+                trans_all+=trans1[i]+trans2[i]+'\n'
+            if trans_content:
+                return trans_all
             else:
                 return None
     
