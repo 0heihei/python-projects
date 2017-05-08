@@ -1,4 +1,5 @@
 # encoding=utf8
+#待修改，Linux版的为最优
 
 from Tkinter import *
 import tkMessageBox,tkFont
