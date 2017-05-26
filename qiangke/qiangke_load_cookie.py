@@ -9,7 +9,7 @@ vfcode_url = "https://jaccount.sjtu.edu.cn/jaccount/captcha?14957079766180.72240
 post_url = "https://jaccount.sjtu.edu.cn/jaccount/ulogin"
 
 usr = "duanyunzhi"
-pwd = "sjtu184052"
+pwd = ""
 
 cookie_jar = http.cookiejar.CookieJar()
 cookies = open('cookies.txt').read()
@@ -34,7 +34,7 @@ formData = {
 	'se': 'CDu+MoSxU/HIRGu55yiEf7LiAYt275JAWZWayVHbRqiHPrYEUSvIA4A=',
 	'v': '',
 	'user': 'duanyunzhi',
-	'pass': 'sjtu184052',
+	'pass': '',
 	'captcha': captcha
 }
 formData = urllib.parse.urlencode(formData).encode("utf8")
