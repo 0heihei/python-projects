@@ -1,0 +1,29 @@
+[
+{
+    "domain": "electsys.sjtu.edu.cn",
+    "hostOnly": true,
+    "httpOnly": true,
+    "name": "ASP.NET_SessionId",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": true,
+    "storeId": "0",
+    "value": "xijtji551doxg055icfpda45",
+    "id": 1
+},
+{
+    "domain": "electsys.sjtu.edu.cn",
+    "expirationDate": 1811142401.315707,
+    "hostOnly": true,
+    "httpOnly": false,
+    "name": "mail_test_cookie",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": false,
+    "session": false,
+    "storeId": "0",
+    "value": "IHIBHIAK",
+    "id": 2
+}
+]
