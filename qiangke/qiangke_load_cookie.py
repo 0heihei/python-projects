@@ -1,4 +1,3 @@
-# overwrited from https://www.sfantree.com/python-crack-lesson/
 import requests
 import urllib.request
 import urllib.parse
