@@ -5,24 +5,6 @@ import urllib.parse
 import os
 import re
 
-# 设置cookies和headers
-#with open('cookies.txt') as f:
-#	cookies_dict={}
-#	for line in f.read().split(';'):
-#		name,value=line.strip().split('=',1)
-#		cookies_dict[name]=value
-#s.cookies=requests.utils.cookiejar_from_dict(cookies)
-headers = {
-	'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-	'Accept-Encoding': 'gzip, deflate, br',
-	'Accept-Language': 'zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4,ja;q=0.2,zh-TW;q=0.2',
-	'Cache-Control': 'max-age=0',
-	'Connection': 'keep-alive',
-	'Content-Type': 'application/x-www-form-urlencoded',
-	'Upgrade-Insecure-Requests': '1',
-	'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-}
-
 # 开始构造表单
 s = requests.Session()
 html = s.get('http://electsys.sjtu.edu.cn/edu/login.aspx').content.decode('utf8')
@@ -50,7 +32,7 @@ post_data=urllib.parse.urlencode(post_data).encode('utf8')
 
 url = 'https://jaccount.sjtu.edu.cn/jaccount/ulogin'
 
-req = s.post(url, data=post_data, headers=headers)
+req = s.post(url, data=post_data,)
 
 url2='http://electsys.sjtu.edu.cn/edu/student/elect/electwarning.aspx?xklc=1'
 post_data2 = {
