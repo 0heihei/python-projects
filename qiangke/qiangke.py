@@ -47,7 +47,7 @@ cookies_dict = {
 	'ASP.NET_SessionId': '2t4hi0552wfesp45u1tbjout',
 	'mail_test_cookie': 'IGIBHIAK'}
 cookies = requests.utils.cookiejar_from_dict(cookies_dict)
-s.cookies = cookies
+s.cookies = cookies   #因为cookie的原因，必须保持网页端登录状态这里才可以登录？
 get_courses = s.post(post_url, post_data)
 
 html=s.get('http://electsys.sjtu.edu.cn/edu/student/elect/speltyRequiredCourse.aspx').content.decode('utf8')
