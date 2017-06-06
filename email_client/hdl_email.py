@@ -22,7 +22,7 @@ class Email:
 	def __init__(self):
 		self.email_dict={1:('gmail','pop.gmail.com',995,'smtp.gmail.com',465),2:('outlook','pop-mail.outlook.com',995,'smtp-mail.outlook.com',587),3:('163','pop.163.com',995,'smtp.163.com',994)}
 		print(self.email_dict)
-		self.email = eval(input('输入要登录的邮箱类型号：'))
+		self.email = eval(input('输入要登录的邮箱类序号：'))
 		self.server = self.email_dict[self.email][1]
 		self.port=self.email_dict[self.email][2]
 		self.usr = input('请输入邮箱地址：')
