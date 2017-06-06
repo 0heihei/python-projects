@@ -12,7 +12,7 @@ import json
 
 
 # 创建 登录界面
-class Log:
+class Login:
 	def __init__(self):
 		self.state = False  # 初始状态为false,即还未登录
 		self.r = Tk()
@@ -111,24 +111,24 @@ class MyApp:
 		self.root.config(menu=self.m)
 		self.m1 = Menu(self.m)  ##### 菜单一
 		self.m.add_cascade(label="词库", menu=self.m1)
-		self.m1.add_radiobutton(label="四级", command=self.getCET4)
-		self.m1.add_radiobutton(label="六级", command=self.getCET6)
-		self.m1.add_radiobutton(label="其它", command=self.getOthers)
+		self.m1.add_radiobutton(label="四级", command=self.get_cet4)
+		self.m1.add_radiobutton(label="六级", command=self.get_cet6)
+		self.m1.add_radiobutton(label="其它", command=self.get_others)
 		self.m2 = Menu(self.m)  ##### 菜单二
 		self.m.add_cascade(label="形式", menu=self.m2)
-		self.m2.add_radiobutton(label="填空题", command=self.wordCompletion)
+		self.m2.add_radiobutton(label="填空题", command=self.word_completion)
 		self.m21 = Menu(self.m2)
 		self.m2.add_cascade(label='选择题', menu=self.m21)
 		self.m21.add_radiobutton(label='英-->汉', command=self.en_to_ch)
 		self.m21.add_radiobutton(label='汉-->英', command=self.ch_to_en)
 		self.m3 = Menu(self.m)  ##### 菜单三
 		self.m.add_cascade(label='功能', menu=self.m3)
-		self.m3.add_command(label='增词', command=self.addWords)
-		self.m3.add_command(label='查词', command=self.searchWord)
+		self.m3.add_command(label='增词', command=self.add_words)
+		self.m3.add_command(label='查词', command=self.search_word)
 		self.m31 = Menu(self.m3)
 		self.m3.add_cascade(label='分析', menu=self.m31)
-		self.m31.add_command(label='四级词汇', command=self.analyseCET4)
-		self.m31.add_command(label='六级词汇', command=self.analyseCET6)
+		self.m31.add_command(label='四级词汇', command=self.analyse_cet4)
+		self.m31.add_command(label='六级词汇', command=self.analyse_cet6)
 		self.m4 = Menu(self.m)  ##### 菜单四
 		self.m.add_cascade(label="关于", menu=self.m4)
 		self.m4.add_command(label='信息', command=self.about)
@@ -167,7 +167,7 @@ class MyApp:
 		self.root.after(1000, self.update_clock)
 
 	# 下面4个函数获取词库单词
-	def getFiles(self, name):
+	def get_files(self, name):
 		"""
 		打开词库文件，读取所有行(每行只有一个单词及其翻译)
 		"""
@@ -183,14 +183,14 @@ class MyApp:
 				tkMessageBox.showwarning('Warning', "请选择文件!")
 				return
 			else:
-				tkMessageBox.showinfo('Info', '成功打开文件%s'%str(self.filename.encode('utf8')))
+				tkMessageBox.showinfo('Info', '成功打开文件%s' % str(self.filename.encode('utf8')))
 		else:
 			self.filename = './Lexicon/' + name
 			self.f1 = open(self.filename, 'r')
 			self.lines = self.f1.readlines()
 			self.f1.close()
 
-	def getWords(self):
+	def get_word(self):
 		"""
 		从之前的列表中选单词作为出题单词
 		"""
@@ -212,27 +212,27 @@ class MyApp:
 				return None  # none信号 可表明用户没有选词库
 		return True
 
-	def getCET4(self):
+	def get_cet4(self):
 		"""
 		指定读取四级词汇
 		"""
-		self.getFiles('CET_4.txt')
+		self.get_files('CET_4.txt')
 
-	def getCET6(self):
+	def get_cet6(self):
 		"""
 		指定读取六级词汇
 		"""
-		self.getFiles('CET_6.txt')
+		self.get_files('CET_6.txt')
 
-	def getOthers(self):
+	def get_others(self):
 		"""
 		由用户自己选择词库
 		"""
-		self.getFiles('')
+		self.get_files('')
 
 	# 填空题
-	def wordCompletion(self):
-		if self.getWords() == None:  # 防止用户未选词库就点击题型
+	def word_completion(self):
+		if self.get_word() == None:  # 防止用户未选词库就点击题型
 			tkMessageBox.showerror(message='请先选择词库！')
 			return
 		tkMessageBox.showwarning(title='Tips', message='输完按 回车键 即可判断并切换')
@@ -240,7 +240,7 @@ class MyApp:
 		# 出题
 		def ques():
 			global v2
-			self.getWords()
+			self.get_word()
 			f1 = Frame(self.f1_1, bd=4, relief="groove", height=100, width=100)
 			f1.place(x=165, y=100)
 			Label(f1, text=self.expre, height=3, width=25, font=self.ft).grid()
@@ -287,8 +287,8 @@ class MyApp:
 		self.bt1.place(x=265, y=240)
 
 	# 选择题
-	def wordChoice(self):
-		if self.getWords() == None:  # 防止用户未选词库就点击题型
+	def word_choice(self):
+		if self.get_word() == None:  # 防止用户未选词库就点击题型
 			tkMessageBox.showerror(message='请先选择词库！')
 			return
 		tkMessageBox.showwarning(title='Tips', message='对着选项双击左键即可判断并切换')
@@ -296,7 +296,7 @@ class MyApp:
 		# 出题
 		def ques():
 			global v3, center, rightItem, rightAns
-			self.getWords()
+			self.get_word()
 			if self.model == 1:  # 英--->汉
 				center, rightAns, ops2, ops3, ops4 = self.word, self.expre, self.expre1, self.expre2, self.expre3
 			else:  # 汉--->英
@@ -366,14 +366,14 @@ class MyApp:
 		英--->汉
 		"""
 		self.model = 1
-		self.wordChoice()
+		self.word_choice()
 
 	def ch_to_en(self):
 		"""
 		汉--->英
 		"""
 		self.model = 0
-		self.wordChoice()
+		self.word_choice()
 
 	# 下面三个函数主要是查词、给个人词库中增词
 	def haici(self, word):
@@ -402,7 +402,7 @@ class MyApp:
 			else:
 				return None
 
-	def addWords(self):
+	def add_words(self):
 		def add_it():
 			word = self.v4.get().lower()
 			trans = self.haici(word)
@@ -428,7 +428,7 @@ class MyApp:
 		self.bt3.grid()
 		Label(self.top1, text='').grid(row=2)
 
-	def searchWord(self):
+	def search_word(self):
 		def search_it():
 			word = self.v5.get().lower()
 			trans = self.haici(word)
@@ -450,7 +450,7 @@ class MyApp:
 		self.bt4 = Button(self.top2, text='确认', command=search_it)
 		self.bt4.grid()
 
-	def analyseText(self, referenceText):
+	def analyse_text(self, referenceText):
 		"""
 		从英文文章中分析出四六级单词
 		"""
@@ -465,7 +465,7 @@ class MyApp:
 			self.data = self.data.split()
 			self.f2.close()
 		except:
-			tkMessageBox.showerror('Error', '无法打开文件\n%s'%str(sys.exc_info()[1]))
+			tkMessageBox.showerror('Error', '无法打开文件\n%s' % str(sys.exc_info()[1]))
 		if self.filename == ():
 			tkMessageBox.showwarning('Warning', "请选择文件!")
 			exit(0)
@@ -474,7 +474,8 @@ class MyApp:
 
 		self.count_of_words = 0
 		temp = self.filename.encode('utf8')
-		self.word_of_text = open('Texts/word_in_%s.txt'%temp[temp.find('Texts')+6:temp.find('txt')-1], 'a+')  # 用来存放分析出的单词
+		self.word_of_text = open('Texts/word_in_%s.txt' % temp[temp.find('Texts') + 6:temp.find('txt') - 1],
+								 'a+')  # 用来存放分析出的单词
 		for line in open('Lexicon/' + referenceText):
 			try:
 				self.word = line.strip().split()[0]
@@ -488,17 +489,17 @@ class MyApp:
 		self.word_of_text.close()
 		tkMessageBox.showinfo(message='析出单词共%s条\n请在 Texts文件夹中查看' % str(self.count_of_words))
 
-	def analyseCET4(self):
+	def analyse_cet4(self):
 		"""
 		从文本中找四级单词
 		"""
-		self.analyseText('CET_4.txt')
+		self.analyse_text('CET_4.txt')
 
-	def analyseCET6(self):
+	def analyse_cet6(self):
 		"""
 		从文本中找六级单词
 		"""
-		self.analyseText('CET_6.txt')
+		self.analyse_text('CET_6.txt')
 
 	def about(self):
 		"""
@@ -509,7 +510,7 @@ class MyApp:
 			self.top3.destroy()
 
 		self.top3 = Toplevel()
-		self.lb1 = Listbox(self.top3, fg='white', bg='black', height=4,width=30)
+		self.lb1 = Listbox(self.top3, fg='white', bg='black', height=4, width=30)
 		self.lb1.insert(1, 'Author: Duan Yunzhi')
 		self.lb1.insert(2, 'Made on: 2017/6/1')
 		self.lb1.insert(3, 'Contact: d15821917291@gmail.com')
@@ -518,7 +519,7 @@ class MyApp:
 		self.lb1.grid(padx=3, pady=4)
 		self.top3.mainloop()
 
-	def usersInfo(self):
+	def user_info(self):
 		"""
 		用户信息
 		"""
@@ -535,7 +536,7 @@ class MyApp:
 		self.top4.mainloop()
 
 
-wel_page = Log()
+wel_page = Login()
 # 没有注册登录则避免显示软件主界面
 try:
 	if wel_page.state == True:
