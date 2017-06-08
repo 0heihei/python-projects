@@ -1,2 +1,6 @@
 # pycharmProjects
-python实现的简易邮件客户端</br>python实现的单词测验小工具</br>python实现简易爬虫</br>tkinter的OOP实现小示例
+./email_client/ 简易邮件客户端</br>
+./play_English_words/ 单词测验小工具</br>
+./scratchers/ 简易爬虫</br> 
+./pyHW1/tkinter的OOP实现小示例</br>
+./pyHW2/ 卡通版sjtu
