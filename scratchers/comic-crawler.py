@@ -55,10 +55,10 @@ def get_images(imlist):
 
 def main():
     try:
-        os.mkdir('d://Desktop/网球王子漫画下载')
+        os.mkdir('d://Desktop/网球王子漫画')
     except:
         pass
-    os.chdir('d://Desktop/网球王子漫画下载')
+    os.chdir('d://Desktop/网球王子漫画')
 
     url = "http://www.cartoonmad.com/comic/1079.html"
     imdict = get_imdict(url)
