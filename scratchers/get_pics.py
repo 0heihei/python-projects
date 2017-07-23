@@ -21,11 +21,11 @@ def getImage(data):
 	for i in range(len(imList)):
 		imList[i] = imList[i].replace('="', '')
 	print('downloading...')
-	name = 1
+	index = 1
 	for imgurl in imList:
-		print('downloading image%s...'%name)
-		urllib.request.urlretrieve(imgurl, r'images/%s.jpg' % name)
-		name += 1
+		print('downloading image%s...'%index)
+		urllib.request.urlretrieve(imgurl, r'images/%s.jpg' % index)
+		index += 1
 	print('Got', len(imList), 'images!')
 def main():
 	url=get_url()
