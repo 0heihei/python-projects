@@ -13,12 +13,13 @@ def get_imdict(url):
     data = requests.get(url)
     data.encoding = ('big5')  # 已知网页源码为big5编码
     html = data.text
-    categories = zip(re.findall('第(\s[0-9]+\s)話', html),
-                     re.findall('([0-9]+)頁', html),
-                     re.findall('href=(.*?)target=_blank>第', html))
+    categories = list(zip(re.findall('第(\s[0-9]+\s)話', html),
+                          re.findall('([0-9]+)頁', html),
+                          re.findall('href=(.*?)target=_blank>第', html)))  # 要加list：zip对象不可索引
     imdict = {}
-    option = int(input('你想下载前多少话的？'))
-    for i in list(categories)[:option]:  # 要加list：zip对象不可迭代
+    print('目前一共有第%s话到第%s话.' % (categories[0][0], categories[-1][0]))
+    start, end = map(int, input('你想下载第几话到第几话的(空格分隔)？').split())
+    for i in list(categories)[start - 1:end]:
         imlist = []
         for j in range(int(i[1])):
             j += 1
