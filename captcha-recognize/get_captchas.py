@@ -11,7 +11,7 @@ def main():
             f.write(r.content)
 
 
-path = './images/'
+path = './examine_samples/'
 if os.path.exists(path):
     pass
 else:

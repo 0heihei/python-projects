@@ -59,5 +59,5 @@ def recognize(img):
 
 
 img = Image.open('./imgs/0.jpg').convert('L')
-bin_img = b_process(img, 200)
+bin_img = b_process(img, 150)
 x_segment(bin_img)
